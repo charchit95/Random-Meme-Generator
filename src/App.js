@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import data from "./data.json";
 
 function App() {
+  const len = data.memes.length;
+  const [current, setCurrent] = useState(Math.floor(Math.random() * len))
+  const [meme, setMeme] = useState(data.memes[current])
+  const loadAnother = () => {
+    const rand = Math.floor(Math.random() * len);
+    setCurrent(rand)
+    setMeme(data.memes[rand])
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="memeContainer">
+        <img src={meme.url} alt={meme.name}/>
+        <h1>{meme.name}</h1>
+      </div>
+      <div className="load-another" onClick={loadAnother}>
+        Load Another
+      </div>
     </div>
   );
 }
